@@ -1,5 +1,5 @@
 ###################################################################################################
-# Step 4 - Climate App
+# REQUIRED: Step 2 - Climate App
 #
 #   Now that you have completed your initial analysis, design a Flask api
 #   based on the queries that you have just developed.
@@ -14,7 +14,7 @@
 #           * Return the json representation of your dictionary.
 #       * `/api/v1.0/stations`
 #           * Return a json list of stations from the dataset.
-#       * `/api/v1.0/tobs`
+#       * `/api/v1.0/temperature
 #           * Return a json list of Temperature Observations (tobs) for the previous year
 #       * `/api/v1.0/<start>` and `/api/v1.0/<start>/<end>`
 #           * Return a json list of the minimum temperature, the average temperature, and
@@ -72,7 +72,7 @@ def welcome():
         f"/api/v1.0/stations<br/>"
         f"- List of Station numbers and names<br/>"
         f"<br/>"
-        f"/api/v1.0/tobs<br/>"
+        f"/api/v1.0/temperature<br/>"
         f"- List of prior year temperatures from all stations<br/>"
         f"<br/>"
         f"/api/v1.0/start<br/>"
@@ -113,8 +113,8 @@ def stations():
     stations = pd.read_sql(stations_query.statement, stations_query.session.bind)
     return jsonify(stations.to_dict())
 #########################################################################################
-@app.route("/api/v1.0/tobs")
-def tobs():
+@app.route("/api/v1.0/temperature")
+def temperature():
     """Return a list of temperatures for prior year"""
 #    * Query for the dates and temperature observations from the last year.
 #           * Convert the query results to a Dictionary using `date` as the key and `tobs` as the value.
@@ -130,7 +130,7 @@ def tobs():
     for result in temperature:
         row = {}
         row["date"] = temperature[0]
-        row["tobs"] = temperature[1]
+        row["temperature"] = temperature[1]
         temperature_totals.append(row)
 
     return jsonify(temperature_totals)
